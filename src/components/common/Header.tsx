@@ -51,10 +51,10 @@ export const Header: React.FC<HeaderProps> = ({
   const isExtraActive = activeTab === 'mistakes' || activeTab === 'games';
 
   return (
-    <header className="sticky top-0 z-40 bg-[#090d16]/80 backdrop-blur-2xl border-b border-white/[0.08] transition-all shadow-[0_4px_30px_rgba(0,0,0,0.3)]">
-      <div className="max-w-[1700px] w-full mx-auto px-2 sm:px-4 lg:px-6 h-16 sm:h-18 flex items-center justify-between">
+    <header className="sticky top-0 z-40 bg-[#090d16]/85 backdrop-blur-2xl border-b border-white/[0.08] transition-all shadow-[0_4px_30px_rgba(0,0,0,0.3)]">
+      <div className="max-w-[1700px] w-full mx-auto px-2.5 sm:px-4 lg:px-6 h-14 sm:h-16 flex items-center justify-between gap-2">
         {/* Logo and Brand */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center min-w-0">
           <RaspberryLogo size="md" />
         </div>
 
@@ -256,29 +256,29 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Action Controls: Cheatsheet button & Mobile AI trigger */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
           {/* Quick Cheatsheet Button */}
           <button
             id="btn-open-cheatsheet"
             onClick={onOpenCheatsheet}
-            className="flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-white/[0.05] hover:bg-rose-500 text-rose-300 hover:text-white border border-rose-500/30 hover:border-rose-400 backdrop-blur-xl transition-all shadow-[0_4px_16px_rgba(0,0,0,0.2)] group active:scale-95"
+            className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold bg-white/[0.05] hover:bg-rose-500 text-rose-300 hover:text-white border border-rose-500/30 hover:border-rose-400 backdrop-blur-xl transition-all shadow-[0_4px_16px_rgba(0,0,0,0.2)] group active:scale-95 shrink-0"
           >
-            <FileCode2 className="w-4 h-4 text-rose-400 group-hover:text-white transition-colors" />
+            <FileCode2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-rose-400 group-hover:text-white transition-colors" />
             <span className="hidden sm:inline">Шпаргалка CSS</span>
-            <span className="sm:hidden">Шпаргалка</span>
+            <span className="sm:hidden text-[11px]">Шпаргалка</span>
           </button>
 
           {/* Mobile AI Direct Button on Header */}
           <button
             onClick={onToggleAI}
-            className={`lg:hidden flex items-center gap-1.5 px-3 py-2 rounded-full border transition-all text-xs font-semibold backdrop-blur-xl ${
+            className={`lg:hidden flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full border transition-all text-xs font-semibold backdrop-blur-xl shrink-0 active:scale-95 ${
               isAIOpen
                 ? 'bg-rose-500 text-white border-white/20 shadow-[0_4px_16px_rgba(244,63,94,0.45)]'
                 : 'bg-white/[0.04] text-slate-300 hover:text-white border-white/[0.08]'
             }`}
           >
             <Sparkles className={`w-3.5 h-3.5 ${isAIOpen ? 'text-white' : 'text-rose-400'}`} />
-            <span>AI</span>
+            <span className="text-[11px] sm:text-xs">AI Сенсей</span>
           </button>
         </div>
       </div>

@@ -26,7 +26,7 @@ export const RaspberryLogo: React.FC<RaspberryLogoProps> = ({
   };
 
   return (
-    <div className={`flex items-center gap-3 ${className}`}>
+    <div className={`flex items-center gap-2 sm:gap-3 ${className}`}>
       {/* Custom Raspberry SVG with depth, gloss and leaves */}
       <div className={`relative flex items-center justify-center ${iconSizes[size]} shrink-0`}>
         <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_12px_rgba(244,63,94,0.5)]">
@@ -111,14 +111,14 @@ export const RaspberryLogo: React.FC<RaspberryLogoProps> = ({
       </div>
 
       {showText && (
-        <div className="flex flex-col">
-          <div className={`font-extrabold tracking-tight text-white flex items-center gap-1.5 ${textSizes[size]}`}>
+        <div className="flex flex-col min-w-0">
+          <div className={`font-extrabold tracking-tight text-white flex items-center gap-1 sm:gap-1.5 text-sm sm:text-base md:${textSizes[size]} whitespace-nowrap`}>
             <span>Flexbox</span>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-rose-500 to-pink-500">
               by Malynivka
             </span>
           </div>
-          <span className="text-[11px] text-slate-400 font-medium tracking-wider uppercase -mt-0.5">
+          <span className="text-[10px] sm:text-[11px] text-slate-400 font-medium tracking-wider uppercase -mt-0.5 hidden sm:block truncate">
             Інтерактивна школа верстки
           </span>
         </div>

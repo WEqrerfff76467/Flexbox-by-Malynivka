@@ -139,15 +139,15 @@ export const TheoryPage: React.FC = () => {
   return (
     <div className="max-w-[1700px] w-full mx-auto px-2 sm:px-4 lg:px-6 py-3 sm:py-5 space-y-4 sm:space-y-5 animate-fadeIn pb-20 lg:pb-10">
       {/* Sleek Compact Header */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 glass-panel p-4 sm:p-5 rounded-3xl">
-        <div className="flex items-center gap-3.5">
-          <div className="p-2.5 sm:p-3 rounded-2xl bg-rose-500/10 border border-rose-500/25 text-rose-400 shrink-0 backdrop-blur-md">
+      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 glass-panel p-3.5 sm:p-5 rounded-3xl">
+        <div className="flex items-center gap-3">
+          <div className="p-2 sm:p-3 rounded-2xl bg-rose-500/10 border border-rose-500/25 text-rose-400 shrink-0 backdrop-blur-md">
             <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
-          <div>
-            <h1 className="text-lg sm:text-2xl font-extrabold text-white flex items-center gap-2">
-              <span>Теоретичний Довідник</span>
-              <span className="text-[11px] font-mono bg-rose-500/15 text-rose-300 border border-rose-500/30 px-2.5 py-0.5 rounded-full backdrop-blur-md">
+          <div className="min-w-0">
+            <h1 className="text-base sm:text-2xl font-extrabold text-white flex items-center gap-2">
+              <span className="truncate">Теоретичний Довідник</span>
+              <span className="text-[10px] sm:text-[11px] font-mono bg-rose-500/15 text-rose-300 border border-rose-500/30 px-2 py-0.5 rounded-full backdrop-blur-md shrink-0">
                 12 властивостей
               </span>
             </h1>
@@ -158,12 +158,12 @@ export const TheoryPage: React.FC = () => {
         </div>
 
         {/* Filter Switcher & Search */}
-        <div className="flex items-center gap-2.5 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
-          <div className="flex items-center gap-1 bg-white/[0.04] p-1 rounded-full border border-white/[0.08] backdrop-blur-xl shrink-0">
+        <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-0.5 md:pb-0 no-scrollbar">
+          <div className="flex items-center gap-1 bg-white/[0.04] p-1 rounded-full border border-white/[0.08] backdrop-blur-xl shrink-0 w-full sm:w-auto justify-between sm:justify-start">
             <button
               id="filter-all"
               onClick={() => setSelectedTarget('all')}
-              className={`relative px-3.5 py-1.5 text-xs font-semibold rounded-full transition-colors ${
+              className={`relative px-2.5 sm:px-3.5 py-1 sm:py-1.5 text-xs font-semibold rounded-full transition-colors ${
                 selectedTarget === 'all' ? 'text-white' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
@@ -179,7 +179,7 @@ export const TheoryPage: React.FC = () => {
             <button
               id="filter-container"
               onClick={() => setSelectedTarget('container')}
-              className={`relative flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-full transition-colors ${
+              className={`relative flex items-center gap-1 px-2.5 sm:px-3.5 py-1 sm:py-1.5 text-xs font-semibold rounded-full transition-colors ${
                 selectedTarget === 'container' ? 'text-white' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
@@ -190,13 +190,13 @@ export const TheoryPage: React.FC = () => {
                   transition={{ type: 'spring', stiffness: 450, damping: 32 }}
                 />
               )}
-              <Box className="w-3.5 h-3.5 relative z-10" />
-              <span className="relative z-10">Контейнер (7)</span>
+              <Box className="w-3 h-3 sm:w-3.5 sm:h-3.5 relative z-10" />
+              <span className="relative z-10">Контейнер</span>
             </button>
             <button
               id="filter-item"
               onClick={() => setSelectedTarget('item')}
-              className={`relative flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-full transition-colors ${
+              className={`relative flex items-center gap-1 px-2.5 sm:px-3.5 py-1 sm:py-1.5 text-xs font-semibold rounded-full transition-colors ${
                 selectedTarget === 'item' ? 'text-white' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
@@ -207,19 +207,19 @@ export const TheoryPage: React.FC = () => {
                   transition={{ type: 'spring', stiffness: 450, damping: 32 }}
                 />
               )}
-              <Layers className="w-3.5 h-3.5 relative z-10" />
-              <span className="relative z-10">Елементи (5)</span>
+              <Layers className="w-3 h-3 sm:w-3.5 sm:h-3.5 relative z-10" />
+              <span className="relative z-10">Елементи</span>
             </button>
           </div>
 
-          <div className="relative shrink-0 hidden sm:block">
+          <div className="relative shrink-0 hidden md:block">
             <Search className="w-3.5 h-3.5 absolute left-3.5 top-2.5 text-slate-400" />
             <input
               type="text"
               placeholder="Швидкий пошук..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="bg-white/[0.04] border border-white/[0.08] backdrop-blur-xl rounded-full pl-9 pr-3.5 py-1.5 text-xs text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-rose-500/60 focus:bg-white/[0.07] w-44 transition-all"
+              className="bg-white/[0.04] border border-white/[0.08] backdrop-blur-xl rounded-full pl-9 pr-3.5 py-1.5 text-xs text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-rose-500/60 focus:bg-white/[0.07] w-40 transition-all"
             />
           </div>
         </div>
@@ -400,7 +400,7 @@ export const TheoryPage: React.FC = () => {
                   </span>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-1.5 sm:gap-2">
                   {activeProp.values.map((v) => {
                     const isValActive = (activeValues[activeProp.id] || activeProp.values[0].value) === v.value;
                     return (
@@ -408,7 +408,7 @@ export const TheoryPage: React.FC = () => {
                         key={v.value}
                         id={`val-btn-${v.value}`}
                         onClick={() => handleValueChange(activeProp.id, v.value)}
-                        className={`relative py-2 px-3 rounded-full text-xs font-mono font-medium transition-colors text-center truncate border ${
+                        className={`relative py-1.5 sm:py-2 px-2 sm:px-3 rounded-full text-[11px] sm:text-xs font-mono font-medium transition-colors text-center truncate border ${
                           isValActive
                             ? 'text-white font-bold border-rose-400/50'
                             : 'bg-white/[0.04] text-slate-300 border-white/[0.08] hover:border-white/[0.18] hover:bg-white/[0.08] hover:text-white backdrop-blur-md'
@@ -441,7 +441,7 @@ export const TheoryPage: React.FC = () => {
                   )}
                 </div>
 
-                <div className="bg-[#06080e]/90 rounded-2xl p-3 sm:p-4 border border-white/[0.08] overflow-hidden min-h-[160px] flex flex-col justify-center shadow-inner">
+                <div className="bg-[#06080e]/90 rounded-2xl p-2.5 sm:p-4 border border-white/[0.08] overflow-hidden min-h-[140px] flex flex-col justify-center shadow-inner">
                   <div
                     style={{
                       display: currentContainerStyle.display,
@@ -450,9 +450,9 @@ export const TheoryPage: React.FC = () => {
                       justifyContent: currentContainerStyle.justifyContent,
                       alignItems: currentContainerStyle.alignItems,
                       alignContent: currentContainerStyle.alignContent,
-                      gap: `${currentContainerStyle.gap}px`,
-                      minHeight: '140px',
-                      padding: '12px',
+                      gap: `${Math.min(currentContainerStyle.gap, 16)}px`,
+                      minHeight: '120px',
+                      padding: '8px',
                       backgroundColor: 'rgba(15, 20, 32, 0.75)',
                       borderRadius: '16px',
                       border: '1px solid rgba(244, 63, 94, 0.25)',
@@ -473,7 +473,7 @@ export const TheoryPage: React.FC = () => {
                             alignSelf: it.alignSelf,
                             transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                           }}
-                          className={`rounded-2xl p-2.5 sm:p-3.5 flex flex-col items-center justify-center text-center shadow-md min-w-[70px] sm:min-w-[85px] min-h-[65px] border transition-all ${
+                          className={`rounded-xl sm:rounded-2xl p-2 sm:p-3.5 flex flex-col items-center justify-center text-center shadow-md min-w-[56px] sm:min-w-[85px] min-h-[52px] sm:min-h-[65px] border transition-all ${
                             isItemTargetActive
                               ? 'bg-gradient-to-br from-amber-500 via-amber-600 to-amber-800 text-slate-950 font-bold border-amber-300 ring-4 ring-amber-400/50 scale-105 z-10'
                               : isTargetItem

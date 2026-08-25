@@ -213,9 +213,9 @@ export const EditorPage: React.FC = () => {
         justifyContent: containerStyle.justifyContent,
         alignItems: containerStyle.alignItems,
         alignContent: containerStyle.alignContent,
-        gap: `${containerStyle.gap}px`,
-        minHeight: isMini ? '120px' : '220px',
-        padding: `${containerStyle.padding}px`,
+        gap: `${Math.min(containerStyle.gap, 16)}px`,
+        minHeight: isMini ? '100px' : '180px',
+        padding: `${Math.min(containerStyle.padding, 14)}px`,
         backgroundColor: '#0d111a',
         borderRadius: '16px',
         border: '1px solid rgba(225, 29, 72, 0.3)',
@@ -236,11 +236,11 @@ export const EditorPage: React.FC = () => {
               alignSelf: it.alignSelf,
               transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
             }}
-            className={`cursor-pointer rounded-xl p-2.5 sm:p-3 flex flex-col items-center justify-center text-center shadow-lg transition-all select-none ${
-              isMini ? 'min-w-[65px] min-h-[55px]' : 'min-w-[80px] min-h-[70px]'
+            className={`cursor-pointer rounded-xl p-2 sm:p-3 flex flex-col items-center justify-center text-center shadow-lg transition-all select-none ${
+              isMini ? 'min-w-[55px] min-h-[50px]' : 'min-w-[65px] sm:min-w-[80px] min-h-[56px] sm:min-h-[70px]'
             } relative ${
               isSelected
-                ? 'bg-gradient-to-br from-amber-500 via-rose-500 to-rose-700 text-white ring-4 ring-amber-400/50 shadow-2xl scale-[1.03] z-10'
+                ? 'bg-gradient-to-br from-amber-500 via-rose-500 to-rose-700 text-white ring-2 sm:ring-4 ring-amber-400/50 shadow-2xl scale-[1.03] z-10'
                 : 'bg-gradient-to-br from-slate-800 via-slate-850 to-slate-900 hover:border-rose-500/50 border border-slate-700 text-slate-100'
             }`}
           >
@@ -252,7 +252,7 @@ export const EditorPage: React.FC = () => {
             <div className="mb-0.5 flex items-center justify-center">
               <RaspberryIcon variant={isSelected ? 'gold' : 'rose'} size={isMini ? 'xs' : 'sm'} />
             </div>
-            <span className={`font-bold truncate max-w-full ${isMini ? 'text-[10px]' : 'text-xs'}`}>
+            <span className={`font-bold truncate max-w-full ${isMini ? 'text-[9px]' : 'text-[11px] sm:text-xs'}`}>
               {it.customText}
             </span>
             {!isMini && (

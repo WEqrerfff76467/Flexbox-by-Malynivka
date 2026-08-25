@@ -65,15 +65,15 @@ export default function App() {
         onClose={() => setIsAIOpen(false)}
       />
 
-      {/* Desktop & Tablet Glass Footer */}
-      <footer className="relative z-10 border-t border-white/[0.06] bg-[#090d16]/75 backdrop-blur-2xl py-8 px-2 sm:px-4 lg:px-6 mt-12 pb-28 lg:pb-8">
-        <div className="max-w-[1700px] w-full mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-3">
+      {/* Desktop & Mobile Glass Footer */}
+      <footer className="relative z-10 border-t border-white/[0.06] bg-[#090d16]/80 backdrop-blur-2xl py-6 sm:py-8 px-3 sm:px-4 lg:px-6 mt-8 sm:mt-12 pb-28 lg:pb-8">
+        <div className="max-w-[1700px] w-full mx-auto flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6">
+          <div className="flex items-center justify-center md:justify-start">
             <RaspberryLogo size="sm" />
           </div>
 
-          {/* Quick Footer Capsule Navigation with sliding pill & AI button */}
-          <div className="flex items-center gap-2">
+          {/* Quick Footer Capsule Navigation (visible on md+ screens to avoid mobile clutter) */}
+          <div className="hidden md:flex items-center gap-2 flex-wrap justify-center">
             <div className="flex items-center gap-1.5 p-1 rounded-full bg-white/[0.04] border border-white/[0.08] backdrop-blur-md text-xs font-medium text-slate-300">
               {(['theory', 'editor', 'mistakes', 'games'] as TabType[]).map((tab) => {
                 const labelMap: Record<TabType, string> = {
@@ -127,8 +127,8 @@ export default function App() {
             </button>
           </div>
 
-          <div className="flex items-center gap-2 text-xs text-slate-400">
-            <span>Зроблено з любов'ю до сучасної веброзробки</span>
+          <div className="flex items-center gap-2 text-xs text-slate-400 text-center">
+            <span>Зроблено з любов'ю до веброзробки</span>
             <RaspberryIcon size="sm" variant="rose" />
           </div>
         </div>
