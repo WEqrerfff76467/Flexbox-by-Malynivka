@@ -22,6 +22,7 @@ import {
   RefreshCw,
 } from 'lucide-react';
 import { RaspberryIcon } from '../common/RaspberryIcon';
+import { sendSenseiMessage } from '../../services/aiSenseiService';
 
 interface Message {
   id: string;
@@ -148,54 +149,32 @@ export const RaspberrySenseiModal: React.FC<RaspberrySenseiModalProps> = ({
     setIsCodeInputVisible(false);
     setIsLoading(true);
 
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000);
-
     try {
-      const response = await fetch('/api/ai/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        signal: controller.signal,
-        body: JSON.stringify({
-          messages: newMessages.map((m) => ({
-            role: m.role,
-            content: m.codeSnippet
-              ? `${m.content}\n\n\`\`\`css\n${m.codeSnippet}\n\`\`\``
-              : m.content,
-          })),
-          codeSnippet: codeToSend || undefined,
-          mode: codeToSend ? 'fix-code' : 'general',
-        }),
+      const replyText = await sendSenseiMessage({
+        messages: newMessages.map((m) => ({
+          role: m.role,
+          content: m.codeSnippet
+            ? `${m.content}\n\n\`\`\`css\n${m.codeSnippet}\n\`\`\``
+            : m.content,
+        })),
+        codeSnippet: codeToSend || undefined,
+        mode: codeToSend ? 'fix-code' : 'general',
       });
-
-      clearTimeout(timeoutId);
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `Помилка сервера: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const replyText = data.reply || 'Сенсей уважно все вивчив і готує відповідь...';
 
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: replyText,
+        content: replyText || 'Сенсей уважно все вивчив і готує відповідь...',
         timestamp: new Date(),
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (err: any) {
-      clearTimeout(timeoutId);
       console.error('AI chat error:', err);
-      const isTimeout = err.name === 'AbortError';
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: isTimeout
-          ? `🍓 **Час очікування вичерпано!**\n\nСервер не встиг відповісти за 15 секунд. Будь ласка, спробуйте ще раз або виберіть одну зі швидких тем!`
-          : `🍓 **Ой, сталась невелика заминка!**\n\n${err.message || 'Не вдалося звʼязатися із сервером'}. Будь ласка, спробуйте ще раз через мить!`,
+        content: `🍓 **Ой, сталась невелика заминка!**\n\n${err.message || 'Не вдалося обробити запит'}. Будь ласка, спробуйте ще раз або виберіть одну зі швидких тем!`,
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);
