@@ -1,0 +1,6 @@
+{
+  "name": "Flexbox by Malynivka",
+  "description": "Інтерактивна навчальна платформа для опанування CSS Flexbox: теорія з наочними аналогіями, візуальний редактор з експортом коду, розбір типових помилок та міні-ігри.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
