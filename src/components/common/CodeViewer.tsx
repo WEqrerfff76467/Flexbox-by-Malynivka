@@ -13,7 +13,7 @@ export const CodeViewer: React.FC<CodeViewerProps> = ({
   items = [],
   customTitle = 'Згенерований CSS / BEM Код',
 }) => {
-  const [activeTab, setActiveTab] = useState<'css' | 'tailwind' | 'html'>('css');
+  const [activeTab, setActiveTab] = useState<'css' | 'html'>('css');
   const [copied, setCopied] = useState(false);
 
   // Generate Vanilla CSS with BEM
@@ -66,48 +66,6 @@ export const CodeViewer: React.FC<CodeViewerProps> = ({
     return css;
   };
 
-  // Generate Tailwind classes
-  const generateTailwind = () => {
-    const classes: string[] = [containerStyle.display];
-
-    // Direction
-    if (containerStyle.flexDirection === 'row-reverse') classes.push('flex-row-reverse');
-    if (containerStyle.flexDirection === 'column') classes.push('flex-col');
-    if (containerStyle.flexDirection === 'column-reverse') classes.push('flex-col-reverse');
-
-    // Wrap
-    if (containerStyle.flexWrap === 'wrap') classes.push('flex-wrap');
-    if (containerStyle.flexWrap === 'wrap-reverse') classes.push('flex-wrap-reverse');
-
-    // Justify
-    const justifyMap: Record<string, string> = {
-      'flex-start': 'justify-start',
-      'flex-end': 'justify-end',
-      center: 'justify-center',
-      'space-between': 'justify-between',
-      'space-around': 'justify-around',
-      'space-evenly': 'justify-evenly',
-    };
-    if (containerStyle.justifyContent) classes.push(justifyMap[containerStyle.justifyContent] || '');
-
-    // Align Items
-    const alignMap: Record<string, string> = {
-      stretch: 'items-stretch',
-      'flex-start': 'items-start',
-      'flex-end': 'items-end',
-      center: 'items-center',
-      baseline: 'items-baseline',
-    };
-    if (containerStyle.alignItems) classes.push(alignMap[containerStyle.alignItems] || '');
-
-    // Gap
-    if (containerStyle.gap > 0) {
-      classes.push(`gap-[${containerStyle.gap}px]`);
-    }
-
-    return `<!-- Tailwind CSS клас для контейнера -->\n<div class="${classes.filter(Boolean).join(' ')}">\n  <!-- Ваші елементи -->\n</div>`;
-  };
-
   // Generate Full HTML + CSS
   const generateFullHtml = () => {
     return `<!DOCTYPE html>
@@ -146,7 +104,6 @@ ${items
 
   const getActiveCode = () => {
     if (activeTab === 'css') return generateBemCss();
-    if (activeTab === 'tailwind') return generateTailwind();
     return generateFullHtml();
   };
 
@@ -185,17 +142,6 @@ ${items
             CSS (BEM)
           </button>
           <button
-            id="btn-tab-tailwind"
-            onClick={() => setActiveTab('tailwind')}
-            className={`px-3.5 py-1 text-xs rounded-full font-semibold transition-all ${
-              activeTab === 'tailwind'
-                ? 'bg-rose-500 text-white shadow-[0_2px_10px_rgba(244,63,94,0.4)]'
-                : 'text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            Tailwind
-          </button>
-          <button
             id="btn-tab-html"
             onClick={() => setActiveTab('html')}
             className={`px-3.5 py-1 text-xs rounded-full font-semibold transition-all ${
@@ -204,7 +150,7 @@ ${items
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
-            Full HTML
+            HTML + CSS
           </button>
         </div>
 

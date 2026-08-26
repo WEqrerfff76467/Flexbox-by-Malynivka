@@ -1,4 +1,4 @@
-import React, { useId } from 'react';
+import React from 'react';
 
 export interface RaspberryIconProps {
   variant?: 'pink' | 'rose' | 'gold' | 'amber' | 'dark' | 'white' | 'emerald';
@@ -11,138 +11,151 @@ export const RaspberryIcon: React.FC<RaspberryIconProps> = ({
   size = 'md',
   className = '',
 }) => {
-  const uid = useId().replace(/:/g, '');
-
   const sizeClasses: Record<string, string> = {
-    xs: 'w-3.5 h-3.5',
-    sm: 'w-4 h-4',
-    md: 'w-5 h-5',
+    xs: 'w-4 h-4',
+    sm: 'w-5 h-5',
+    md: 'w-6 h-6',
     lg: 'w-8 h-8',
-    xl: 'w-12 h-12',
+    xl: 'w-10 h-10',
   };
 
   const isNumericSize = typeof size === 'number';
   const sizeStyle = isNumericSize ? { width: `${size}px`, height: `${size}px` } : undefined;
-  const sizeClass = !isNumericSize ? sizeClasses[size] || 'w-5 h-5' : '';
+  const sizeClass = !isNumericSize ? sizeClasses[size] || 'w-6 h-6' : '';
 
-  // Gradient configurations for different raspberry colors
+  const getGradientId = () => {
+    switch (variant) {
+      case 'gold':
+      case 'amber':
+        return 'amber-grad';
+      case 'emerald':
+        return 'emerald-grad';
+      case 'pink':
+        return 'pink-grad';
+      case 'white':
+        return 'white-grad';
+      case 'dark':
+        return 'dark-grad';
+      case 'rose':
+      default:
+        return 'rose-grad';
+    }
+  };
+
   const isGold = variant === 'gold' || variant === 'amber';
-  const isDark = variant === 'dark';
-  const isWhite = variant === 'white';
   const isEmerald = variant === 'emerald';
+  const isWhite = variant === 'white';
 
-  const berryGradStops = isGold ? (
-    <>
-      <stop offset="0%" stopColor="#fef08a" />
-      <stop offset="35%" stopColor="#f59e0b" />
-      <stop offset="100%" stopColor="#b45309" />
-    </>
-  ) : isDark ? (
-    <>
-      <stop offset="0%" stopColor="#64748b" />
-      <stop offset="50%" stopColor="#334155" />
-      <stop offset="100%" stopColor="#0f172a" />
-    </>
-  ) : isWhite ? (
-    <>
-      <stop offset="0%" stopColor="#ffffff" />
-      <stop offset="50%" stopColor="#e2e8f0" />
-      <stop offset="100%" stopColor="#94a3b8" />
-    </>
-  ) : isEmerald ? (
-    <>
-      <stop offset="0%" stopColor="#6ee7b7" />
-      <stop offset="40%" stopColor="#10b981" />
-      <stop offset="100%" stopColor="#047857" />
-    </>
-  ) : (
-    <>
-      <stop offset="0%" stopColor="#fb7185" />
-      <stop offset="40%" stopColor="#e11d48" />
-      <stop offset="100%" stopColor="#881337" />
-    </>
-  );
-
-  const glowColor = isGold ? 'rgba(245, 158, 11, 0.4)' : isEmerald ? 'rgba(16, 185, 129, 0.4)' : 'rgba(244, 63, 94, 0.4)';
+  const glowColor = isGold
+    ? 'rgba(245, 158, 11, 0.4)'
+    : isEmerald
+    ? 'rgba(16, 185, 129, 0.4)'
+    : isWhite
+    ? 'rgba(255, 255, 255, 0.3)'
+    : 'rgba(244, 63, 94, 0.4)';
 
   return (
     <span
-      className={`inline-flex items-center justify-center shrink-0 leading-none select-none ${sizeClass} ${className}`}
+      className={`inline-flex items-center justify-center shrink-0 leading-none select-none transition-transform duration-200 ${sizeClass} ${className}`}
       style={sizeStyle}
     >
       <svg
-        viewBox="0 0 100 100"
-        className="w-full h-full overflow-visible"
-        style={{ filter: `drop-shadow(0 0 4px ${glowColor})` }}
+        viewBox="0 0 32 32"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-full h-full drop-shadow-sm"
+        style={{ filter: `drop-shadow(0 0 6px ${glowColor})` }}
       >
         <defs>
-          <linearGradient id={`bg-${uid}`} x1="0%" y1="0%" x2="100%" y2="100%">
-            {berryGradStops}
+          {/* Default Raspberry Rose Gradient */}
+          <linearGradient id="rose-grad" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#FB7185" />
+            <stop offset="50%" stopColor="#F43F5E" />
+            <stop offset="100%" stopColor="#BE123C" />
           </linearGradient>
-          <linearGradient id={`lg-${uid}`} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#86efac" />
-            <stop offset="100%" stopColor="#15803d" />
+
+          {/* Pink Gradient */}
+          <linearGradient id="pink-grad" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#F472B6" />
+            <stop offset="50%" stopColor="#EC4899" />
+            <stop offset="100%" stopColor="#BE185D" />
           </linearGradient>
-          <radialGradient id={`sh-${uid}`} cx="35%" cy="35%" r="65%">
-            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.75" />
-            <stop offset="45%" stopColor="#ffffff" stopOpacity="0.1" />
-            <stop offset="100%" stopColor="#000000" stopOpacity="0.15" />
-          </radialGradient>
+
+          {/* Gold / Amber Gradient */}
+          <linearGradient id="amber-grad" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#FDE68A" />
+            <stop offset="50%" stopColor="#F59E0B" />
+            <stop offset="100%" stopColor="#B45309" />
+          </linearGradient>
+
+          {/* Emerald Gradient */}
+          <linearGradient id="emerald-grad" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#6EE7B7" />
+            <stop offset="50%" stopColor="#10B981" />
+            <stop offset="100%" stopColor="#047857" />
+          </linearGradient>
+
+          {/* White / Platinum Gradient */}
+          <linearGradient id="white-grad" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#FFFFFF" />
+            <stop offset="100%" stopColor="#E2E8F0" />
+          </linearGradient>
+
+          {/* Dark / Charcoal Gradient */}
+          <linearGradient id="dark-grad" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#475569" />
+            <stop offset="100%" stopColor="#0F172A" />
+          </linearGradient>
+
+          {/* Leaf Green Gradient */}
+          <linearGradient id="leaf-grad" x1="8" y1="2" x2="24" y2="10" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#4ADE80" />
+            <stop offset="100%" stopColor="#15803D" />
+          </linearGradient>
         </defs>
 
-        {/* Green calyx / leaves at top of raspberry */}
+        {/* Green Leaves at Top */}
         <path
-          d="M 50 25 C 44 8 28 10 22 17 C 28 25 40 24 50 25 Z"
-          fill={`url(#lg-${uid})`}
+          d="M16 8C13 4 8 5 8 5C8 5 10 9 14 9L16 8Z"
+          fill="url(#leaf-grad)"
         />
         <path
-          d="M 50 25 C 56 8 72 10 78 17 C 72 25 60 24 50 25 Z"
-          fill={`url(#lg-${uid})`}
+          d="M16 8C19 4 24 5 24 5C24 5 22 9 18 9L16 8Z"
+          fill="url(#leaf-grad)"
         />
         <path
-          d="M 50 25 C 50 10 47 6 50 2 C 53 6 53 15 50 25 Z"
-          stroke="#166534"
-          strokeWidth="3.5"
-          strokeLinecap="round"
+          d="M15 9C15 6 16 3 16 3C16 3 17 6 17 9H15Z"
+          fill="#86EFAC"
         />
 
-        {/* Cluster of raspberry drupelets */}
-        {/* Row 1 */}
-        <circle cx="37" cy="38" r="11" fill={`url(#bg-${uid})`} />
-        <circle cx="37" cy="38" r="11" fill={`url(#sh-${uid})`} />
-        <circle cx="63" cy="38" r="11" fill={`url(#bg-${uid})`} />
-        <circle cx="63" cy="38" r="11" fill={`url(#sh-${uid})`} />
+        {/* Raspberry Berry Drupelets (Cluster Circles) */}
+        {/* Top Row */}
+        <circle cx="11.5" cy="12.5" r="3.2" fill={`url(#${getGradientId()})`} />
+        <circle cx="16" cy="11.5" r="3.4" fill={`url(#${getGradientId()})`} />
+        <circle cx="20.5" cy="12.5" r="3.2" fill={`url(#${getGradientId()})`} />
 
-        {/* Row 2 center */}
-        <circle cx="50" cy="42" r="12" fill={`url(#bg-${uid})`} />
-        <circle cx="50" cy="42" r="12" fill={`url(#sh-${uid})`} />
+        {/* Middle Row */}
+        <circle cx="9" cy="17" r="3.3" fill={`url(#${getGradientId()})`} />
+        <circle cx="13.5" cy="16.5" r="3.4" fill={`url(#${getGradientId()})`} />
+        <circle cx="18.5" cy="16.5" r="3.4" fill={`url(#${getGradientId()})`} />
+        <circle cx="23" cy="17" r="3.3" fill={`url(#${getGradientId()})`} />
 
-        {/* Row 2 sides */}
-        <circle cx="26" cy="53" r="11.5" fill={`url(#bg-${uid})`} />
-        <circle cx="26" cy="53" r="11.5" fill={`url(#sh-${uid})`} />
-        <circle cx="74" cy="53" r="11.5" fill={`url(#bg-${uid})`} />
-        <circle cx="74" cy="53" r="11.5" fill={`url(#sh-${uid})`} />
+        {/* Lower Row */}
+        <circle cx="11" cy="21.5" r="3.2" fill={`url(#${getGradientId()})`} />
+        <circle cx="16" cy="21.5" r="3.3" fill={`url(#${getGradientId()})`} />
+        <circle cx="21" cy="21.5" r="3.2" fill={`url(#${getGradientId()})`} />
 
-        {/* Row 3 inner */}
-        <circle cx="38" cy="58" r="12" fill={`url(#bg-${uid})`} />
-        <circle cx="38" cy="58" r="12" fill={`url(#sh-${uid})`} />
-        <circle cx="62" cy="58" r="12" fill={`url(#bg-${uid})`} />
-        <circle cx="62" cy="58" r="12" fill={`url(#sh-${uid})`} />
+        {/* Bottom Tip */}
+        <circle cx="13.5" cy="25.5" r="2.8" fill={`url(#${getGradientId()})`} />
+        <circle cx="18.5" cy="25.5" r="2.8" fill={`url(#${getGradientId()})`} />
+        <circle cx="16" cy="27.5" r="2.2" fill={`url(#${getGradientId()})`} />
 
-        {/* Row 4 lower */}
-        <circle cx="32" cy="72" r="11" fill={`url(#bg-${uid})`} />
-        <circle cx="32" cy="72" r="11" fill={`url(#sh-${uid})`} />
-        <circle cx="68" cy="72" r="11" fill={`url(#bg-${uid})`} />
-        <circle cx="68" cy="72" r="11" fill={`url(#sh-${uid})`} />
-        <circle cx="50" cy="70" r="12.5" fill={`url(#bg-${uid})`} />
-        <circle cx="50" cy="70" r="12.5" fill={`url(#sh-${uid})`} />
-
-        {/* Bottom tip */}
-        <circle cx="41" cy="84" r="9.5" fill={`url(#bg-${uid})`} />
-        <circle cx="41" cy="84" r="9.5" fill={`url(#sh-${uid})`} />
-        <circle cx="59" cy="84" r="9.5" fill={`url(#bg-${uid})`} />
-        <circle cx="59" cy="84" r="9.5" fill={`url(#sh-${uid})`} />
-        <circle cx="50" cy="88" r="8" fill={`url(#bg-${uid})`} />
+        {/* Subtle Highlights for Berry Texture */}
+        <circle cx="15.2" cy="10.5" r="0.9" fill="#FFFFFF" fillOpacity="0.6" />
+        <circle cx="10.8" cy="11.5" r="0.8" fill="#FFFFFF" fillOpacity="0.5" />
+        <circle cx="12.8" cy="15.5" r="0.9" fill="#FFFFFF" fillOpacity="0.6" />
+        <circle cx="17.8" cy="15.5" r="0.9" fill="#FFFFFF" fillOpacity="0.6" />
+        <circle cx="15.2" cy="20.5" r="0.8" fill="#FFFFFF" fillOpacity="0.5" />
       </svg>
     </span>
   );

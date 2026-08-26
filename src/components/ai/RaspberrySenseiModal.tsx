@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import ReactMarkdown from 'react-markdown';
 import {
   Sparkles,
-  Bot,
   Send,
   X,
   Code,
@@ -13,11 +12,8 @@ import {
   Lightbulb,
   Wand2,
   HelpCircle,
-  RotateCcw,
   Zap,
-  BookOpen,
   AlertTriangle,
-  ChevronRight,
   Terminal,
   RefreshCw,
 } from 'lucide-react';
@@ -40,7 +36,7 @@ interface RaspberrySenseiModalProps {
 const PRESET_TOPICS = [
   {
     title: 'Чому текст не обрізається у flex-row?',
-    prompt: 'Чому у flex-рядку довгий текст не обрізається через overflow-hidden або text-ellipsis, а розпирає всю картку? Як це виправити?',
+    prompt: 'Чому у flex-рядку довгий текст не обрізається через overflow: hidden або text-overflow: ellipsis, а розпирає всю картку? Як це виправити чистим CSS?',
     icon: AlertTriangle,
     tag: 'min-width: 0',
   },
@@ -64,13 +60,13 @@ const PRESET_TOPICS = [
   },
   {
     title: 'Рівні 3 колонки (flex: 1 1 0%)',
-    prompt: 'Чому flex-grow: 1 робить колонки нерівними через різну кількість тексту, і як правильно задати flex: 1 1 0% / flex-1?',
+    prompt: 'Чому flex-grow: 1 робить колонки нерівними через різну кількість тексту, і як правильно задати flex: 1 1 0% на чистому CSS?',
     icon: Wand2,
     tag: 'flex: 1',
   },
   {
     title: 'Загадай Flexbox-загадку!',
-    prompt: 'Загадай мені цікавий інтерактивний челендж або загадку по Flexbox, щоб я потренував розуміння властивостей!',
+    prompt: 'Загадай мені цікавий челендж або загадку по Flexbox, щоб я потренував розуміння властивостей чистого CSS!',
     icon: HelpCircle,
     tag: 'Челендж',
   },
@@ -79,15 +75,15 @@ const PRESET_TOPICS = [
 const INITIAL_GREETING: Message = {
   id: 'welcome',
   role: 'assistant',
-  content: `Привіт, друже! 🍓 Я — **Малиновий Сенсей** (Raspberry Sensei), твій особистий наставник у всесвіті CSS Flexbox та сучасної веброзробки!
+  content: `Привіт, друже! 🍓 Я — **Малиновий Сенсей** (Raspberry Sensei), твій персональний живий ШІ-наставник у світі CSS Flexbox!
 
-Я тут, щоб:
-- 💡 **Пояснити будь-яку тему чи властивість** простою мовою з живими аналогіями;
-- 🔍 **Знайти та розібрати баг у твоєму коді** (чому елементи не стають у центр, розпирають контейнер чи сплющуються);
-- 🛠️ **Перетворити заплутаний CSS у чистий та елегантний Tailwind CSS**;
-- 🎯 **Дати практичні поради та лайфхаки**, які знають лише досвідчені сеньйори.
+Я готовий:
+- 💡 **Відповісти на будь-яке запитання** про властивості чистого Vanilla CSS та BEM;
+- 🔍 **Проаналізувати твій код** у реальному часі та знайти баги верстки;
+- 📐 **Скласти надійне Flexbox-рішення** під твої макети;
+- 🎯 **Ділитися практичними сеньйор-лайфхаками**.
 
-Напиши своє запитання нижче або обери швидку тему! Можеш також вставити фрагмент свого коду для миттєвого аналізу.`,
+Напиши своє запитання нижче або прикріпи свій код! 🚀`,
   timestamp: new Date(),
 };
 
@@ -174,7 +170,9 @@ export const RaspberrySenseiModal: React.FC<RaspberrySenseiModalProps> = ({
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: `🍓 **Ой, сталась невелика заминка!**\n\n${err.message || 'Не вдалося обробити запит'}. Будь ласка, спробуйте ще раз або виберіть одну зі швидких тем!`,
+        content: `🍓 **Повідомлення від Сенсея:**\n\n${
+          err.message || 'Не вдалося виконати запит до ШІ.'
+        }`,
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);
@@ -237,12 +235,13 @@ export const RaspberrySenseiModal: React.FC<RaspberrySenseiModalProps> = ({
                     Малиновий Сенсей
                     <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-300 animate-pulse shrink-0" />
                   </h3>
-                  <span className="px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/30 shrink-0">
-                    AI Експерт
+                  <span className="px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 shrink-0 flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    ШІ Активний
                   </span>
                 </div>
                 <p className="text-[11px] sm:text-xs text-slate-400 truncate hidden sm:block">
-                  Аналіз помилок у коді • Пояснення тем • Сеньйорні Flexbox-лайфхаки
+                  ШІ-наставник на базі Gemini • Чистий Vanilla CSS
                 </p>
               </div>
             </div>
@@ -254,7 +253,7 @@ export const RaspberrySenseiModal: React.FC<RaspberrySenseiModalProps> = ({
                 className="p-1.5 sm:p-2 rounded-xl text-slate-400 hover:text-rose-300 hover:bg-white/[0.06] transition-colors text-xs flex items-center gap-1.5"
               >
                 <Trash2 className="w-4 h-4" />
-                <span className="hidden md:inline">Очистити</span>
+                <span className="hidden sm:inline">Очистити</span>
               </button>
 
               <button
@@ -379,7 +378,7 @@ export const RaspberrySenseiModal: React.FC<RaspberrySenseiModalProps> = ({
                 <div className="bg-[#141a2e]/90 border border-rose-500/30 rounded-2xl rounded-tl-none p-4 text-slate-300 flex items-center gap-3 shadow-lg">
                   <RefreshCw className="w-4 h-4 text-rose-400 animate-spin" />
                   <span className="text-xs sm:text-sm font-medium">
-                    Малиновий Сенсей аналізує Flexbox-магію та готує пояснення...
+                    Малиновий Сенсей аналізує запитання...
                   </span>
                 </div>
               </motion.div>
@@ -403,7 +402,7 @@ export const RaspberrySenseiModal: React.FC<RaspberrySenseiModalProps> = ({
                     <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-white/10 text-xs text-rose-300 font-semibold">
                       <div className="flex items-center gap-1.5">
                         <Terminal className="w-3.5 h-3.5 text-rose-400" />
-                        <span className="text-[11px] sm:text-xs">Вставте ваш проблемний CSS/HTML:</span>
+                        <span className="text-[11px] sm:text-xs">Вставте ваш CSS/HTML для аналізу:</span>
                       </div>
                       <button
                         onClick={() => {
@@ -418,7 +417,7 @@ export const RaspberrySenseiModal: React.FC<RaspberrySenseiModalProps> = ({
                     <textarea
                       value={codeContext}
                       onChange={(e) => setCodeContext(e.target.value)}
-                      placeholder={`/* Приклад */\n.container {\n  display: flex;\n  justify-content: center;\n}`}
+                      placeholder={`/* Приклад */\n.card-container {\n  display: flex;\n  justify-content: center;\n}`}
                       rows={3}
                       className="w-full bg-transparent text-xs font-mono text-rose-100 placeholder:text-slate-500 focus:outline-none resize-none"
                     />
@@ -434,7 +433,7 @@ export const RaspberrySenseiModal: React.FC<RaspberrySenseiModalProps> = ({
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Запитайте Сенсея про будь-яку проблему, властивість чи помилку..."
+                  placeholder="Запитайте Сенсея про будь-яку проблему, властивість чи напишіть запитання..."
                   rows={2}
                   className="w-full bg-transparent text-xs sm:text-sm text-slate-100 placeholder:text-slate-400 focus:outline-none resize-none custom-scrollbar"
                 />
